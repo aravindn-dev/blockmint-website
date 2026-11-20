@@ -1,8 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion'
 
 /**
- * Isometric block composition — a stepped architectural stack with one
- * copper "minted" block floating above it. Pure SVG, no images.
+ * Isometric block composition — an architectural cyber stack with the signature
+ * BlockMint cube floating above it. Pure SVG, no images.
  */
 const S = 34 // cube size
 const C = Math.cos(Math.PI / 6)
@@ -15,7 +15,7 @@ const heights = [
   [2, 2, 1, 1, 0],
   [1, 1, 0, 0, 0],
 ]
-// tops to outline in copper
+// tops to outline in neon cyan
 const accentTops = new Set(['0-2', '2-0', '4-0'])
 
 function faces(x, y, z) {
@@ -27,7 +27,7 @@ function faces(x, y, z) {
   }
 }
 
-function Cube({ x, y, z, accent, copper, delay, reduce }) {
+function Cube({ x, y, z, accent, minted, delay, reduce }) {
   const f = faces(x, y, z)
   return (
     <motion.g
@@ -35,13 +35,23 @@ function Cube({ x, y, z, accent, copper, delay, reduce }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
     >
-      <polygon points={f.left} fill={copper ? '#B27637' : '#1A1918'} stroke="rgba(255,255,255,0.10)" strokeWidth="0.8" />
-      <polygon points={f.right} fill={copper ? '#7E4F22' : '#141312'} stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+      <polygon
+        points={f.left}
+        fill={minted ? 'url(#cubeLeft)' : '#0C1322'}
+        stroke={minted ? '#00E7FB' : 'rgba(36,52,73,0.7)'}
+        strokeWidth={minted ? 1.2 : 0.8}
+      />
+      <polygon
+        points={f.right}
+        fill={minted ? 'url(#cubeRight)' : '#070C16'}
+        stroke={minted ? '#A1F309' : 'rgba(36,52,73,0.5)'}
+        strokeWidth={minted ? 1.2 : 0.8}
+      />
       <polygon
         points={f.top}
-        fill={copper ? 'url(#copperTop)' : '#262422'}
-        stroke={accent ? '#D99A52' : 'rgba(255,255,255,0.16)'}
-        strokeWidth={accent ? 1.2 : 0.8}
+        fill={minted ? 'url(#cubeTop)' : '#121C2F'}
+        stroke={minted ? '#00E7FB' : accent ? '#00E7FB' : 'rgba(36,52,73,0.9)'}
+        strokeWidth={minted ? 1.5 : accent ? 1.2 : 0.8}
       />
     </motion.g>
   )
@@ -66,22 +76,36 @@ export default function HeroVisual({ className = '' }) {
 
   return (
     <div className={`relative ${className}`}>
-      <svg viewBox="-200 -285 400 470" className="h-full w-full overflow-visible" role="img" aria-label="Abstract composition of interlocking blocks">
+      <svg
+        viewBox="-200 -285 400 470"
+        className="h-full w-full overflow-visible"
+        role="img"
+        aria-label="Abstract isometric composition of BlockMint cyber architecture"
+      >
         <defs>
-          <linearGradient id="copperTop" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stopColor="#F0C890" />
-            <stop offset="1" stopColor="#D99A52" />
+          <linearGradient id="cubeTop" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stopColor="#00E7FB" />
+            <stop offset="100%" stopColor="#A1F309" />
+          </linearGradient>
+          <linearGradient id="cubeLeft" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#0374F8" />
+            <stop offset="100%" stopColor="#0058FA" />
+          </linearGradient>
+          <linearGradient id="cubeRight" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#00C853" />
+            <stop offset="100%" stopColor="#A1F309" />
           </linearGradient>
           <radialGradient id="floorGlow" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stopColor="#D99A52" stopOpacity="0.16" />
-            <stop offset="1" stopColor="#D99A52" stopOpacity="0" />
+            <stop offset="0%" stopColor="#00E7FB" stopOpacity="0.22" />
+            <stop offset="60%" stopColor="#0374F8" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="#080D16" stopOpacity="0" />
           </radialGradient>
         </defs>
 
-        <ellipse cx="0" cy="150" rx="210" ry="70" fill="url(#floorGlow)" />
+        <ellipse cx="0" cy="150" rx="220" ry="75" fill="url(#floorGlow)" />
 
-        {/* floor grid */}
-        <g stroke="rgba(255,255,255,0.06)" strokeWidth="0.7">
+        {/* cyber floor grid */}
+        <g stroke="rgba(36,52,73,0.45)" strokeWidth="0.8">
           {Array.from({ length: 8 }).map((_, i) => {
             const a = project(i - 1, -1, 0), b = project(i - 1, 6, 0)
             const c = project(-1, i - 1, 0), d = project(6, i - 1, 0)
@@ -102,11 +126,11 @@ export default function HeroVisual({ className = '' }) {
           {/* connection line from floating block to its slot */}
           <line
             x1={anchor[0]} y1={anchor[1]} x2={fBottom[0]} y2={fBottom[1]}
-            stroke="#D99A52" strokeWidth="1" strokeDasharray="3 5" className="animate-dash" opacity="0.7"
+            stroke="#00E7FB" strokeWidth="1.2" strokeDasharray="3 5" className="animate-dash" opacity="0.85"
           />
 
           <g className="animate-float">
-            <Cube x={fx} y={fy} z={fz} copper delay={1.2} reduce={reduce} />
+            <Cube x={fx} y={fy} z={fz} minted delay={1.2} reduce={reduce} />
           </g>
         </g>
       </svg>

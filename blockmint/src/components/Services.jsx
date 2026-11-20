@@ -13,17 +13,21 @@ export default function Services() {
   const showWide = filter === 'All'
 
   return (
-    <section id="services" className="relative bg-ink py-24 sm:py-32">
-      <div className="container-site">
+    <section id="services" className="relative bg-bm-black py-24 sm:py-32 border-t border-bm-border">
+      <div className="grid-lines pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
+      <div className="container-site relative">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <Reveal className="lg:col-span-7">
             <SectionLabel>Our Services</SectionLabel>
             <h2 className="h-section mt-6">
-              Solutions Designed for a <span className="text-copper">Changing World.</span>
+              Solutions Designed for a{' '}
+              <span className="bg-gradient-to-r from-bm-cyan to-bm-green bg-clip-text text-transparent">
+                Changing World.
+              </span>
             </h2>
           </Reveal>
           <Reveal delay={0.1} className="lg:col-span-5">
-            <p className="max-w-md text-base leading-relaxed text-muted sm:text-lg lg:ml-auto">
+            <p className="max-w-md text-base leading-relaxed text-bm-text sm:text-lg lg:ml-auto">
               Explore our integrated technology, consultancy and education services.
             </p>
           </Reveal>
@@ -42,15 +46,19 @@ export default function Services() {
                 aria-selected={filter === f}
                 onClick={() => setFilter(f)}
                 className={`relative shrink-0 rounded-full px-5 py-2.5 text-[13px] font-semibold transition-colors duration-300 ${
-                  filter === f ? 'text-ink' : 'border border-line text-muted hover:text-white'
+                  filter === f ? 'text-black font-bold' : 'border border-bm-border bg-bm-card/50 text-bm-text hover:text-white hover:border-bm-cyan/40'
                 }`}
               >
                 {filter === f && (
-                  <motion.span layoutId="filter-pill" className="absolute inset-0 rounded-full bg-paper" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />
+                  <motion.span
+                    layoutId="filter-pill"
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-bm-cyan to-bm-green shadow-[0_0_20px_rgba(0,231,251,0.4)]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
                 )}
                 <span className="relative">
                   {f}
-                  <span className={`ml-1.5 ${filter === f ? 'text-ink/50' : 'text-muted/70'}`}>
+                  <span className={`ml-1.5 ${filter === f ? 'text-black/70' : 'text-bm-text/70'}`}>
                     {f === 'All' ? services.length : services.filter((s) => s.pillar === f).length}
                   </span>
                 </span>
