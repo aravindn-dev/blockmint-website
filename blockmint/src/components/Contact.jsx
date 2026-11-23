@@ -9,7 +9,7 @@ function Detail({ icon: Icon, label, value, placeholder, href }) {
   const Tag = value && href ? 'a' : 'div'
   return (
     <Tag
-      {...(Tag === 'a' ? { href } : {})}
+      {...(Tag === 'a' ? { href, target: href.startsWith('http') ? '_blank' : undefined, rel: href.startsWith('http') ? 'noopener noreferrer' : undefined } : {})}
       className="group flex items-start gap-4 py-6 sm:block sm:px-8 sm:py-8 sm:first:pl-0"
     >
       <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-bm-border bg-bm-dark text-bm-cyan shadow-[0_0_12px_rgba(0,231,251,0.2)] transition-all duration-300 group-hover:border-bm-cyan">
@@ -17,7 +17,7 @@ function Detail({ icon: Icon, label, value, placeholder, href }) {
       </span>
       <div className="sm:mt-6">
         <p className="text-[11px] font-semibold uppercase tracking-label text-bm-silver/70">{label}</p>
-        <p className={`mt-2 break-words text-[15px] font-medium transition-colors ${value ? 'text-white group-hover:text-bm-cyan' : 'text-white/70'}`}>
+        <p className={`mt-2 break-words whitespace-pre-line text-[15px] font-medium leading-relaxed transition-colors ${value ? 'text-white group-hover:text-bm-cyan' : 'text-white/70'}`}>
           {content}
         </p>
       </div>
@@ -26,6 +26,8 @@ function Detail({ icon: Icon, label, value, placeholder, href }) {
 }
 
 export default function Contact() {
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Srinilayam building, Near Saraswati park, Beside leelamahal theatre, Dabagardens, Visakhapatnam - 530020')}`
+
   return (
     <section id="contact" className="relative isolate overflow-hidden bg-bm-black pt-24 sm:pt-32 border-t border-bm-border">
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-30" aria-hidden="true" />
@@ -63,9 +65,27 @@ export default function Contact() {
             id="contact-details"
             className="mt-20 grid scroll-mt-28 divide-y divide-bm-border border-t border-bm-border sm:mt-24 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
           >
-            <Detail icon={Phone} label="Phone" value={contact.phone} placeholder={placeholders.phone} href={`tel:${contact.phone.replace(/\s/g, '')}`} />
-            <Detail icon={Mail} label="Email" value={contact.email} placeholder={placeholders.email} href={`mailto:${contact.email}`} />
-            <Detail icon={MapPin} label="Address" value={contact.address} placeholder={placeholders.address} />
+            <Detail
+              icon={Phone}
+              label="Phone"
+              value={contact.phone}
+              placeholder={placeholders.phone}
+              href={`tel:${contact.phone.replace(/[\s+]/g, '')}`}
+            />
+            <Detail
+              icon={Mail}
+              label="Email"
+              value={contact.email}
+              placeholder={placeholders.email}
+              href={`mailto:${contact.email}`}
+            />
+            <Detail
+              icon={MapPin}
+              label="Address"
+              value={contact.address}
+              placeholder={placeholders.address}
+              href={mapsHref}
+            />
           </div>
         </Reveal>
       </div>

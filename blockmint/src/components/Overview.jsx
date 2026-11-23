@@ -48,6 +48,9 @@ export default function Overview() {
                 </span>
                 <span className="text-sm font-semibold tracking-wide">BlockMint Technology Services</span>
               </div>
+              <p className="mt-2 text-xs font-medium italic tracking-wide text-bm-cyan">
+                &ldquo;Build Something Today That Inspires Tomorrow.&rdquo;
+              </p>
             </div>
 
             {/* connectors (desktop) */}

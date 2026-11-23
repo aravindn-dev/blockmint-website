@@ -1,30 +1,25 @@
 /**
  * ─────────────────────────────────────────────────────────────
  *  BUSINESS CONTACT CONFIGURATION
- *  Update these values when the official details are available.
- *  Leave a value as an empty string to show its placeholder.
  * ─────────────────────────────────────────────────────────────
  */
 export const contact = {
-  // e.g. '+91 98765 43210'
-  phone: '',
-  // e.g. 'hello@blockmint.in'
-  email: '',
-  // e.g. 'Floor, Building, Street, City, State PIN'
-  address: '',
-  // WhatsApp number in international format, digits only, e.g. '919876543210'
-  whatsappNumber: '',
+  phone: '+91 85001 92449',
+  email: 'blockmintacademy9@gmail.com',
+  address: `1st floor, 2nd chamber, House no 30-14-12/1\nSrinilayam building, Near Saraswati park\nBeside leelamahal theatre, Dabagardens\nVisakhapatnam - 530020`,
+  whatsappNumber: '918500192449',
 }
 
 export const placeholders = {
-  phone: '[BUSINESS PHONE NUMBER]',
-  email: '[OFFICIAL EMAIL ADDRESS]',
-  address: '[OFFICE ADDRESS]',
+  phone: '+91 85001 92449',
+  email: 'blockmintacademy9@gmail.com',
+  address: 'Dabagardens, Visakhapatnam - 530020',
 }
 
 export const brand = {
   name: 'BlockMint Technology Services',
-  tagline: 'Smart Technology. Reliable Services. Better Solutions.',
+  tagline: '“Build Something Today That Inspires Tomorrow.”',
+  quotation: 'Build Something Today That Inspires Tomorrow.',
 }
 
 /** Builds a WhatsApp link. Without a configured number it opens WhatsApp's share sheet. */

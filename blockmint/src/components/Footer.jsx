@@ -16,7 +16,9 @@ export default function Footer() {
         <div className="grid gap-10 py-14 md:grid-cols-12 md:items-start">
           <div className="md:col-span-6">
             <Logo />
-            <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-bm-text">{brand.tagline}</p>
+            <p className="mt-5 max-w-sm text-[14.5px] leading-relaxed text-bm-text">
+              Artificial Intelligence, Blockchain, Software Development, Taxation &amp; Business Consultancy, Educational Training, and Digital Marketing.
+            </p>
           </div>
           <nav aria-label="Footer" className="md:col-span-4">
             <p className="text-[11px] font-semibold uppercase tracking-label text-bm-cyan">Navigation</p>
