@@ -49,7 +49,7 @@ export default function Overview() {
                 <span className="text-sm font-semibold tracking-wide">BlockMint Technology Services</span>
               </div>
               <p className="mt-2 text-xs font-medium italic tracking-wide text-bm-cyan">
-                &ldquo;Build Something Today That Inspires Tomorrow.&rdquo;
+                Build Something Today That Inspires Tomorrow.
               </p>
             </div>
 

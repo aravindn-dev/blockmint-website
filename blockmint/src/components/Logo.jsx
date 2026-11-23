@@ -28,7 +28,7 @@ export default function Logo({ className = '', markOnly = false, tone = 'dark', 
         </span>
         {!hideQuote && (
           <span className="mt-1 text-[8px] sm:text-[9.5px] font-medium italic tracking-normal text-bm-cyan leading-tight">
-            &ldquo;Build Something Today That Inspires Tomorrow.&rdquo;
+            Build Something Today That Inspires Tomorrow.
           </span>
         )}
       </span>

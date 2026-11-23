@@ -18,7 +18,7 @@ export const placeholders = {
 
 export const brand = {
   name: 'BlockMint Technology Services',
-  tagline: '“Build Something Today That Inspires Tomorrow.”',
+  tagline: 'Build Something Today That Inspires Tomorrow.',
   quotation: 'Build Something Today That Inspires Tomorrow.',
 }
 
