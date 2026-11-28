@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Overview from './components/Overview'
@@ -8,13 +8,51 @@ import Approach from './components/Approach'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import LegalModal from './components/LegalModal'
 import { nav } from './config/site'
 
 export default function App() {
+  const [legalDoc, setLegalDoc] = useState(null) // 'privacy' | 'terms' | null
+
+  const openLegal = (type) => {
+    setLegalDoc(type)
+    const targetPath = type === 'privacy' ? '/privacy-policy' : '/terms'
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ legal: type }, '', targetPath)
+    }
+  }
+
+  const closeLegal = () => {
+    setLegalDoc(null)
+    if (window.location.pathname === '/privacy-policy' || window.location.pathname === '/terms') {
+      window.history.pushState(null, '', '/')
+    }
+  }
+
   useEffect(() => {
-    // 1. If someone visits with a legacy hash like /#services, clean it up to /services
+    // 1. Check if direct URL is /privacy-policy or /terms
+    const currentPath = window.location.pathname.replace(/\/+$/, '') || '/'
+    if (currentPath === '/privacy-policy') {
+      setLegalDoc('privacy')
+      return
+    }
+    if (currentPath === '/terms' || currentPath === '/terms-and-conditions') {
+      setLegalDoc('terms')
+      return
+    }
+
+    // 2. If someone visits with a legacy hash like /#services or /#privacy-policy, clean it up
     if (window.location.hash) {
       const hashId = window.location.hash.replace('#', '')
+      if (hashId === 'privacy-policy' || hashId === 'privacy') {
+        openLegal('privacy')
+        return
+      }
+      if (hashId === 'terms' || hashId === 'terms-and-conditions') {
+        openLegal('terms')
+        return
+      }
+
       const matched = nav.find((n) => n.id === hashId)
       const cleanPath = matched ? matched.href : `/${hashId}`
       window.history.replaceState(null, '', cleanPath)
@@ -26,8 +64,7 @@ export default function App() {
       return
     }
 
-    // 2. Direct path access like /services or /contact
-    const currentPath = window.location.pathname.replace(/\/+$/, '') || '/'
+    // 3. Direct path access to sections like /services or /contact
     if (currentPath !== '/') {
       const matched = nav.find((n) => n.href === currentPath)
       if (matched) {
@@ -38,9 +75,19 @@ export default function App() {
       }
     }
 
-    // 3. Browser Back / Forward button navigation
+    // 4. Browser Back / Forward button navigation
     const onPopState = () => {
       const path = window.location.pathname.replace(/\/+$/, '') || '/'
+      if (path === '/privacy-policy') {
+        setLegalDoc('privacy')
+        return
+      }
+      if (path === '/terms' || path === '/terms-and-conditions') {
+        setLegalDoc('terms')
+        return
+      }
+      setLegalDoc(null)
+
       const matched = nav.find((n) => n.href === path) || nav[0]
       if (matched.id === 'home') {
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -74,7 +121,8 @@ export default function App() {
         <About />
         <Contact />
       </main>
-      <Footer />
+      <Footer onOpenLegal={openLegal} />
+      <LegalModal type={legalDoc} onClose={closeLegal} />
     </>
   )
 }

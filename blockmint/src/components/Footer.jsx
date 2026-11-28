@@ -10,7 +10,17 @@ const links = [
   { label: 'Contact', href: '/contact', id: 'contact' },
 ]
 
-export default function Footer() {
+export default function Footer({ onOpenLegal }) {
+  const handleLegalClick = (e, type) => {
+    e.preventDefault()
+    if (onOpenLegal) {
+      onOpenLegal(type)
+    } else {
+      window.history.pushState(null, '', type === 'privacy' ? '/privacy-policy' : '/terms')
+      window.dispatchEvent(new PopStateEvent('popstate'))
+    }
+  }
+
   return (
     <footer className="bg-bm-dark border-t border-bm-border">
       <div className="container-site">
@@ -55,11 +65,30 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-bm-border py-7 text-[13px] text-bm-text sm:flex-row sm:items-center sm:justify-between">
+        {/* Bottom Bar */}
+        <div className="flex flex-col gap-4 border-t border-bm-border py-7 text-[13px] text-bm-text lg:flex-row lg:items-center lg:justify-between">
           <p>Copyright © 2026 BlockMint Technology Services. All Rights Reserved.</p>
+          
+          <p className="text-bm-silver/90">
+            Website Designed &amp; Developed by{' '}
+            <span className="font-semibold text-bm-cyan">Kalki Tec</span>
+          </p>
+
           <div className="flex gap-6">
-            <a href="#privacy-policy" className="transition-colors hover:text-bm-cyan">Privacy Policy</a>
-            <a href="#terms" className="transition-colors hover:text-bm-cyan">Terms &amp; Conditions</a>
+            <a
+              href="/privacy-policy"
+              onClick={(e) => handleLegalClick(e, 'privacy')}
+              className="transition-colors hover:text-bm-cyan"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="/terms"
+              onClick={(e) => handleLegalClick(e, 'terms')}
+              className="transition-colors hover:text-bm-cyan"
+            >
+              Terms &amp; Conditions
+            </a>
           </div>
         </div>
       </div>
