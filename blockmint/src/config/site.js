@@ -5,14 +5,14 @@
  */
 export const contact = {
   phone: '+91 85001 92449',
-  email: 'blockmintacademy9@gmail.com',
+  email: 'info@blockmint.in',
   address: `1st floor, 2nd chamber, House no 30-14-12/1\nSrinilayam building, Near Saraswati park\nBeside leelamahal theatre, Dabagardens\nVisakhapatnam - 530020`,
   whatsappNumber: '918500192449',
 }
 
 export const placeholders = {
   phone: '+91 85001 92449',
-  email: 'blockmintacademy9@gmail.com',
+  email: 'info@blockmint.in',
   address: 'Dabagardens, Visakhapatnam - 530020',
 }
 
