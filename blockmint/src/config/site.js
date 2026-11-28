@@ -36,9 +36,9 @@ export function emailLink(subject = 'Enquiry for BlockMint Technology Services')
 }
 
 export const nav = [
-  { label: 'Home', href: '#home' },
-  { label: 'Services', href: '#services' },
-  { label: 'About Us', href: '#about' },
-  { label: 'Why BlockMint', href: '#why' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/', id: 'home' },
+  { label: 'Services', href: '/services', id: 'services' },
+  { label: 'About Us', href: '/about', id: 'about' },
+  { label: 'Why BlockMint', href: '/why', id: 'why' },
+  { label: 'Contact', href: '/contact', id: 'contact' },
 ]

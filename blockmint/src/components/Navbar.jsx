@@ -3,11 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import Logo from './Logo'
 import { nav, whatsappLink } from '../config/site'
+import { scrollToSection } from '../utils/navigation'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const [active, setActive] = useState('#home')
+  const [active, setActive] = useState('/')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -16,13 +17,22 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Highlight the section currently in view
+  // Highlight the section currently in view & sync clean URL (no hash)
   useEffect(() => {
-    const ids = nav.map((n) => n.href.slice(1))
-    const els = ids.map((id) => document.getElementById(id)).filter(Boolean)
+    const els = nav.map((n) => document.getElementById(n.id)).filter(Boolean)
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => e.isIntersecting && setActive(`#${e.target.id}`))
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const matched = nav.find((n) => n.id === e.target.id)
+            if (matched) {
+              setActive(matched.href)
+              if (window.location.pathname !== matched.href && !window.location.hash) {
+                window.history.replaceState({ sectionId: matched.id }, '', matched.href)
+              }
+            }
+          }
+        })
       },
       { rootMargin: '-45% 0px -50% 0px' },
     )
@@ -47,7 +57,15 @@ export default function Navbar() {
         }`}
       >
         <div className="container-site flex h-[72px] items-center justify-between">
-          <a href="#home" aria-label="BlockMint Technology Services — home" onClick={() => setOpen(false)}>
+          <a
+            href="/"
+            aria-label="BlockMint Technology Services — home"
+            onClick={(e) => {
+              e.preventDefault()
+              setOpen(false)
+              scrollToSection('home', '/')
+            }}
+          >
             <Logo />
           </a>
 
@@ -56,6 +74,10 @@ export default function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
+                onClick={(e) => {
+                  e.preventDefault()
+                  scrollToSection(item.id, item.href)
+                }}
                 className={`relative rounded-full px-4 py-2 text-[13.5px] font-medium transition-colors duration-300 ${
                   active === item.href ? 'text-white' : 'text-bm-text hover:text-white'
                 }`}
@@ -72,7 +94,14 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a href="#contact" className="btn-primary hidden !py-2.5 !px-5 sm:inline-flex group">
+            <a
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection('contact', '/contact')
+              }}
+              className="btn-primary hidden !py-2.5 !px-5 sm:inline-flex group"
+            >
               Let&rsquo;s Talk
               <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
@@ -105,7 +134,11 @@ export default function Navbar() {
                 <motion.a
                   key={item.href}
                   href={item.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpen(false)
+                    scrollToSection(item.id, item.href)
+                  }}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 * i + 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -116,7 +149,15 @@ export default function Navbar() {
                 </motion.a>
               ))}
               <div className="mt-auto grid gap-3 pb-10 pt-8">
-                <a href="#contact" onClick={() => setOpen(false)} className="btn-primary w-full">
+                <a
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpen(false)
+                    scrollToSection('contact', '/contact')
+                  }}
+                  className="btn-primary w-full"
+                >
                   Let&rsquo;s Talk <ArrowUpRight className="h-4 w-4" />
                 </a>
                 <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full">

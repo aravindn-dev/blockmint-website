@@ -1,12 +1,13 @@
 import { ArrowUp } from 'lucide-react'
 import Logo from './Logo'
 import { brand } from '../config/site'
+import { scrollToSection } from '../utils/navigation'
 
 const links = [
-  { label: 'Home', href: '#home' },
-  { label: 'Services', href: '#services' },
-  { label: 'About Us', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/', id: 'home' },
+  { label: 'Services', href: '/services', id: 'services' },
+  { label: 'About Us', href: '/about', id: 'about' },
+  { label: 'Contact', href: '/contact', id: 'contact' },
 ]
 
 export default function Footer() {
@@ -25,7 +26,14 @@ export default function Footer() {
             <ul className="mt-4 grid grid-cols-2 gap-y-3">
               {links.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="text-[15px] text-bm-silver transition-colors hover:text-bm-cyan">
+                  <a
+                    href={l.href}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      scrollToSection(l.id, l.href)
+                    }}
+                    className="text-[15px] text-bm-silver transition-colors hover:text-bm-cyan"
+                  >
                     {l.label}
                   </a>
                 </li>
@@ -34,7 +42,11 @@ export default function Footer() {
           </nav>
           <div className="md:col-span-2 md:text-right">
             <a
-              href="#home"
+              href="/"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection('home', '/')
+              }}
               className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-bm-border bg-bm-card text-white transition-all duration-300 hover:-translate-y-1 hover:border-bm-cyan hover:text-bm-cyan hover:shadow-[0_0_16px_rgba(0,231,251,0.3)]"
               aria-label="Back to top"
             >

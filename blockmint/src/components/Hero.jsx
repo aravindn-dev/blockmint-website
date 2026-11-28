@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowDown, ArrowRight } from 'lucide-react'
 import HeroVisual from './HeroVisual'
 import { pillars } from '../data/content'
+import { scrollToSection } from '../utils/navigation'
 
 const ease = [0.22, 1, 0.36, 1]
 
@@ -55,11 +56,27 @@ export default function Hero() {
           </motion.p>
 
           <motion.div {...rise(0.42)} className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <a href="#services" className="btn-primary group">
+            <a
+              href="/services"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection('services', '/services')
+              }}
+              className="btn-primary group"
+            >
               Explore Our Services
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
-            <a href="#contact" className="btn-ghost">Let&rsquo;s Discuss Your Project</a>
+            <a
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection('contact', '/contact')
+              }}
+              className="btn-ghost"
+            >
+              Let&rsquo;s Discuss Your Project
+            </a>
           </motion.div>
         </div>
 
@@ -78,7 +95,11 @@ export default function Hero() {
         <div className="container-site grid grid-cols-1 sm:grid-cols-3">
           {pillars.map((p, i) => (
             <motion.a
-              href="#overview"
+              href="/services"
+              onClick={(e) => {
+                e.preventDefault()
+                scrollToSection('overview', '/services')
+              }}
               key={p.key}
               {...rise(0.6 + i * 0.1)}
               className={`group flex items-start justify-between gap-6 py-6 sm:py-7 ${
